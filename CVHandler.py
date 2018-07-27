@@ -17,6 +17,7 @@ class CVHandler(object):
         self.IGNORED_CONTACT.append(cv2.imread('ignore/3.png'))
         self.IGNORED_CONTACT.append(cv2.imread('ignore/4.png'))
         self.IGNORED_CONTACT.append(cv2.imread('ignore/5.png'))
+        self.IGNORED_CONTACT.append(cv2.imread('ignore/6.png'))
 
         self.last_10_contacts = []
 
@@ -61,6 +62,7 @@ class CVHandler(object):
                         rect = [0, self.TOP + i - continues_colored, contact.shape[1], contact.shape[0]]
                         print("Get a contact at {}!".format(rect))
                         pendingAreas.append(rect)
+                        self.saveContact(contact)
                 continues_colored = 1
             else:
                 continues_colored += 1
@@ -70,7 +72,7 @@ class CVHandler(object):
 
     def saveContact(self, contact):
         self.last_10_contacts.append(contact)
-        if len(self.last_10_contacts > 10):
+        if len(self.last_10_contacts) > 10:
             self.last_10_contacts = self.last_10_contacts[1:]
 
     def isHandledContact(self, contact):
